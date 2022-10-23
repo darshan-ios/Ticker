@@ -17,6 +17,7 @@ class MessagesViewController: UIViewController, KeyboardHandler {
   private let imageService = ImagePickerService()
   private let locationService = LocationService()
   private var messages = [ObjectMessage]()
+  private var dateArr = [String]()
   
   //MARK: Public properties
   var conversation = ObjectConversation()
@@ -53,8 +54,8 @@ extension MessagesViewController {
   private func fetchMessages() {
     manager.messages(for: conversation) {[weak self] messages in
       self?.messages = messages.sorted(by: {$0.timestamp < $1.timestamp})
-      self?.tableView.reloadData()
-      self?.tableView.scroll(to: .bottom, animated: true)
+        self?.tableView.reloadData()
+        self?.tableView.scroll(to: .bottom, animated: true)
     }
   }
   
@@ -166,16 +167,33 @@ extension MessagesViewController: UITableViewDelegate, UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let message = messages[indexPath.row]
-    if message.contentType == .none {
+      if message.contentType == .none {
       let cell = tableView.dequeueReusableCell(withIdentifier: message.ownerID == UserManager().currentUserID() ? "MessageTableViewCell" : "UserMessageTableViewCell") as! MessageTableViewCell
-      cell.set(message)
+        if indexPath.row == 0 {
+            cell.set(message, true)
+        }
+        else {
+            cell.set(message, false)
+        }
+       
       return cell
     }
     let cell = tableView.dequeueReusableCell(withIdentifier: message.ownerID == UserManager().currentUserID() ? "MessageAttachmentTableViewCell" : "UserMessageAttachmentTableViewCell") as! MessageAttachmentTableViewCell
     cell.delegate = self
-    cell.set(message)
+      if indexPath.row == 0 {
+          cell.set(message, true)
+      }
+      else {
+          cell.set(message, false)
+      }
     return cell
   }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        view.backgroundColor = .white
+        let message = messages[section].timestamp
+        return "\(message)"
+    }
   
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     guard tableView.isDragging else { return }

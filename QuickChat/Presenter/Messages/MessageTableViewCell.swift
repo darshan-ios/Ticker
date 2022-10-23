@@ -36,11 +36,19 @@ class MessageTableViewCell: UITableViewCell {
     
     let dateFormatter = DateFormatter()
     
-  func set(_ message: ObjectMessage) {
+    func set(_ message: ObjectMessage, _ isDateHidden: Bool) {
       profilePic?.image = UIImage(named: "profile pic")
     messageTextView?.text = message.message
       
-      dateTimeLbl?.text = "\(DateService.shared.getDateStringFromServerTimeStemp(Double(message.timestamp))) " + "\(DateService.shared.format(Date(timeIntervalSince1970: TimeInterval(message.timestamp))))"
+        if isDateHidden == true {
+            dateTimeLbl?.isHidden = false
+            dateTimeLbl?.text = "\(DateService.shared.getDateStringFromServerTimeStemp(Double(message.timestamp))) " + "\(DateService.shared.format(Date(timeIntervalSince1970: TimeInterval(message.timestamp))))"
+        }
+        else {
+            dateTimeLbl?.isHidden = true
+            dateTimeLbl?.text = "\(DateService.shared.getDateStringFromServerTimeStemp(Double(message.timestamp))) " + "\(DateService.shared.format(Date(timeIntervalSince1970: TimeInterval(message.timestamp))))"
+        }
+      
     guard let imageView = profilePic else { return }
     guard let userID = message.ownerID else { return }
 //      let strDate = DateService.shared.getDateStringFromServerTimeStemp(Double(message.timestamp))
@@ -57,6 +65,8 @@ class MessageAttachmentTableViewCell: MessageTableViewCell {
   @IBOutlet weak var attachmentImageView: UIImageView!
   @IBOutlet weak var attachmentImageViewHeightConstraint: NSLayoutConstraint!
   @IBOutlet weak var attachmentImageViewWidthConstraint: NSLayoutConstraint!
+  @IBOutlet weak var dateandTimeLbl: UILabel!
+    
   weak var delegate: MessageTableViewCellDelegate?
   
   override func prepareForReuse() {
@@ -67,8 +77,16 @@ class MessageAttachmentTableViewCell: MessageTableViewCell {
     attachmentImageViewWidthConstraint.constant = 250
   }
   
-  override func set(_ message: ObjectMessage) {
-    super.set(message)
+  override func set(_ message: ObjectMessage, _ isDateHidden: Bool) {
+      super.set(message, isDateHidden)
+      if isDateHidden == true {
+      //    dateTimeLbl?.isHidden = false
+          dateandTimeLbl?.text = "\(DateService.shared.getDateStringFromServerTimeStemp(Double(message.timestamp))) " + "\(DateService.shared.format(Date(timeIntervalSince1970: TimeInterval(message.timestamp))))"
+      }
+      else {
+   //       dateTimeLbl?.isHidden = true
+          dateandTimeLbl?.text = "\(DateService.shared.getDateStringFromServerTimeStemp(Double(message.timestamp))) " + "\(DateService.shared.format(Date(timeIntervalSince1970: TimeInterval(message.timestamp))))"
+      }
     switch message.contentType {
     case .location:
       attachmentImageView.image = UIImage(named: "locationThumbnail")
