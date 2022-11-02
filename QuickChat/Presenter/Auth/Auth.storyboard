@@ -12,7 +12,7 @@
         <!--Auth View Controller-->
         <scene sceneID="cay-VV-EvY">
             <objects>
-                <viewController id="I5r-es-mup" customClass="AuthViewController" customModule="QuickChat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AuthViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="I5r-es-mup" customClass="AuthViewController" customModule="QuickChat" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="ePs-iS-IWg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

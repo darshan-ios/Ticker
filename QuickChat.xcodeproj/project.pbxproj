@@ -176,6 +176,7 @@
 		22A92BAF1D59EBD6005D76F7 /* QuickChat */ = {
 			isa = PBXGroup;
 			children = (
+				22A92BB01D59EBD6005D76F7 /* AppDelegate.swift */,
 				22EDC20A226C5229008F1BBC /* Presenter */,
 				22EDC210226C529D008F1BBC /* Data Managers */,
 				22EDC209226C5219008F1BBC /* Services */,
@@ -294,7 +295,6 @@
 		22EDC20F226C5265008F1BBC /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				22A92BB01D59EBD6005D76F7 /* AppDelegate.swift */,
 				22EDC231226C5B10008F1BBC /* Typealiases */,
 				22EDC22E226C5ADD008F1BBC /* Enums */,
 				22EDC212226C5315008F1BBC /* Protocols */,
